@@ -1,0 +1,10 @@
+source_server: ansible
+working_dir: /appl/openldap/
+source_server_cert_working_dir: "{{ working_dir }}/etc/openldap/tls/"
+source_server_cacert_name: cacert.cer
+source_server_cert_name: cert.cer
+source_server_key_name: key.cer
+target_server_cert_working_dir: "{{ working_dir }}/etc/openldap/tls/"
+target_server_cacert_name: cacert.cer
+target_server_cert_name: cert.cer
+target_server_key_name: key.cer

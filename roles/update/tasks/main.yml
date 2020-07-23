@@ -1,0 +1,4 @@
+---
+- import_tasks: update_certs.yml
+  tags:
+    - update:certs
