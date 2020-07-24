@@ -16,7 +16,6 @@
   synchronize: 
     src: "{{ source_server_cert_working_dir }}/{{ source_server_cacert_name }}"  
     dest: "{{ target_server_cert_working_dir }}/{{ target_server_cacert_name }}"
-    use_ssh_args: yes
   delegate_to: "{{ source_server }}"
 
 - name: Copy cert from source server to targets
