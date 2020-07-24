@@ -1,31 +1,29 @@
 ---
-#- name: Copy cacert from source server to temp ansible directory
-#  fetch:
-#    src: "{{ source_server_cert_working_dir }}/{{ source_server_cacert_name }}"
-#    dest: "~/"
-#    flat: yes
-#  when: inventory_hostname == 'ansibletest'
-#
-#- name: Copy cacert from temp ansible directory to targets
-#  fetch:
-#    src: "~/{{ source_server_cacert_name }}"
-#    dest: "{{ target_server_cert_working_dir }}/{{ target_server_cacert_name }"
-#  when: "{{ inventory_hostname != {{ source_server }} }}"
-#
-- name: Copy cacert from source server to targets
-  synchronize: 
-    src: "{{ source_server_cert_working_dir }}/{{ source_server_cacert_name }}"  
+- name: Copy certs from source server to temp ansible directory
+  fetch:
+    src: "{{ source_server_cert_working_dir }}/{{ item }}"
+    dest: "~/"
+    flat: true
+  when: inventory_hostname == source_server
+  with_items:
+    - "{{ source_server_cacert_name }}" 
+    - "{{ source_server_cert_name }}"
+    - "{{ source_server_key_name }}"
+
+- name: Copy cacert from temp ansible directory to target
+  copy:
+    src: "~/{{ source_server_cacert_name }}"
     dest: "{{ target_server_cert_working_dir }}/{{ target_server_cacert_name }}"
-  delegate_to: "{{ source_server }}"
+  when: inventory_hostname != source_server
 
-- name: Copy cert from source server to targets
-  synchronize: 
-    src: "{{ source_server_cert_working_dir }}/{{ source_server_cert_name }}"  
+- name: Copy cert from temp ansible directory to target
+  copy:
+    src: "~/{{ source_server_cert_name }}"
     dest: "{{ target_server_cert_working_dir }}/{{ target_server_cert_name }}"
-  delegate_to: "{{ source_server }}"
+  when: inventory_hostname != source_server
 
-- name: Copy keys from source server to targets
-  synchronize: 
-    src: "{{ source_server_cert_working_dir }}/{{ source_server_key_name }}"  
+- name: Copy key from temp ansible directory to target
+  copy:
+    src: "~/{{ source_server_key_name }}"
     dest: "{{ target_server_cert_working_dir }}/{{ target_server_key_name }}"
-  delegate_to: "{{ source_server }}"
+  when: inventory_hostname != source_server

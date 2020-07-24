@@ -44,5 +44,5 @@
 
 ## Insert targets for deployment here
 [servers]
-#ansible ansible_host=ansible ansible_user=ansible-adm ansible_become=ansible-adm
+ansible ansible_host=ansible ansible_user=ansible-adm ansible_become=ansible-adm
 ansibletest ansible_host=ansibletest ansible_user=webadm ansible_become=webadm
